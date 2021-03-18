@@ -15,19 +15,25 @@ class UploadedFile:
 class Session:
     _HOST = "https://api.uploadgram.me"
 
-    def __init__(self, proxies: dict = None):
+    def __init__(self,
+                 proxies: dict = None,
+                 headers: dict = None):
+        if headers is None:
+            headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0)'}
+        if proxies is None:
+            proxies = {}
         self.s = requests.Session()
-        self.s.headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0)'
-        }
-        if proxies is not None:
-            self.s.proxies = proxies
+        self.s.headers = headers
+        self.s.proxies = proxies
         self.uploaded_files = []
 
     def upload_file(self, filename: str, file: Union[str, bytes]) -> UploadedFile:
         if isinstance(file, str):
-            with open(file, 'rb') as f:
-                b_file = f.read()
+            if file.startswith("http"):
+                b_file = self.s.get(file).content
+            else:
+                with open(file, 'rb') as f:
+                    b_file = f.read()
         elif isinstance(file, bytes):
             b_file = file
         else:
