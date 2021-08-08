@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='PyUploadGram',
-    version='1.0.0',
+    version='1.0.1',
     project_urls={"Source": "https://github.com/scrubjay55/PyUploadGram.git"},
     url="https://github.com/scrubjay55/PyUploadGram.git",
     author='scrubjay55',

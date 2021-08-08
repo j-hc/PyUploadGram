@@ -2,3 +2,7 @@
 venv
 test.py
 __pycache__
+a.txt
+build
+dist
+PyUploadGram.egg-info

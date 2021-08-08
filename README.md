@@ -3,10 +3,8 @@
 An API wrapper for UploadGram
 
 # Installation
-not on pyPi soo..
-    
-    git clone https://github.com/scrubjay55/PyUploadGram
-    pip3 install ./PyUploadGram
+
+    pip install PyUploadGram
 
 
 # Usage
@@ -32,6 +30,7 @@ some_media_u = pyuploadgram_sesh.upload_file(filename="some media.jpg",
                                              file="https://i.redd.it/xxxxxxx.jpg"
                                              )
 # OR
+import requests
 b_some_media = requests.get("https://i.redd.it/xxxxxxx.jpg").content
 some_media_u2 = pyuploadgram_sesh.upload_file(filename="some media.jpg",
                                               file=b_some_media

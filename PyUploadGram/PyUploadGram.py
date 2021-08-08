@@ -4,9 +4,13 @@ from json.decoder import JSONDecodeError
 
 
 class UploadedFile:
-    def __init__(self, url, delete):
-        self.url = f"{url}?raw"
-        self.delete = delete
+    def __init__(self, resp: dict):
+        self.url = f"{resp['url']}?raw"
+        self.delete = resp['delete']
+
+    @property
+    def url_without_raw(self):
+        return self.url.split('?')[0]
 
     def __repr__(self):
         return f"(UploadedFile: url={self.url}, delete={self.delete})"
@@ -43,7 +47,7 @@ class Session:
         resp = self.s.post(f"{self._HOST}/upload", files=files).json()
         if not bool(resp.get("ok")):
             raise Exception(resp)
-        uploaded_file = UploadedFile(resp['url'], resp['delete'])
+        uploaded_file = UploadedFile(resp)
         self.uploaded_files.append(uploaded_file)
         return uploaded_file
 
